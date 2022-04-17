@@ -53,8 +53,10 @@ const formatTime = (seconds) =>
   new Date(seconds * 1000).toISOString().substring(11, 19);
 
 const handleLoadedEetadata = () => {
-  totalTime.innerText = formatTime(Math.floor(video.duration));
-  timeline.max = Math.floor(video.duration);
+  if (!isNaN(video.duration)) {
+    totalTime.innerText = formatTime(Math.floor(video.duration));
+    timeline.max = Math.floor(video.duration);
+  }
 };
 const handleTimeUpdate = () => {
   currenTime.innerText = formatTime(Math.floor(video.currentTime));
@@ -110,11 +112,15 @@ const handleVideoEnded = () => {
   fetch(`/api/videos/${id}/view`, { method: "POST" });
 };
 
+if (video) {
+  handleLoadedData();
+}
+
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 fullScreenBtn.addEventListener("click", handleFullScreen);
 volumeRange.addEventListener("input", handleVolumeChange);
-video.addEventListener("loadedmetadata", handleLoadedEetadata);
+video.addEventListener("canplay", handleLoadedEetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("click", handleVideoClick);
 video.addEventListener("ended", handleVideoEnded);
