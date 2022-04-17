@@ -113,7 +113,7 @@ const handleVideoEnded = () => {
 };
 
 if (video) {
-  handleLoadedData();
+  handleLoadedEetadata();
 }
 
 playBtn.addEventListener("click", handlePlayClick);
