@@ -27,11 +27,13 @@ app.use(
 );
 app.use(flash());
 app.use(localsMiddleware);
+/*
 app.use((req, res, next) => {
   res.header("Cross-Origin-Embedder-Policy", "credentialless");
   res.header("Cross-Origin-Opener-Policy", "same-origin");
   next();
 });
+*/
 app.use("/uploads", express.static("uploads"));
 app.use("/assets", express.static("assets"));
 app.use("/", rootRouter);

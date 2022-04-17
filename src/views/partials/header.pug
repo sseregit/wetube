@@ -21,9 +21,9 @@ header
                             span 😀
                         else 
                             if loggedInUser.avatarUrl.indexOf("upload") > -1
-                                img(src="/"+loggedInUser.avatarUrl).header__avatar
+                                img(src="/"+loggedInUser.avatarUrl crossorigin).header__avatar
                             else
-                                img(src=loggedInUser.avatarUrl).header__avatar
+                                img(src=loggedInUser.avatarUrl crossorigin).header__avatar
             else
                 li
                     a(href="/login") Login    
