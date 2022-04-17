@@ -1,0 +1,49 @@
+extends base
+
+block content
+    div#videoContainer.videoContainer
+        video(src="/"+video.fileUrl data-id=video._id).video
+        div#videoControls.videoControls
+            div.videoControls__left
+                button#play.videoControls__playBtn
+                    i.fas.fa-play 
+                button#mute.videoControls__muteBtn
+                    i.fas.fa-volume-up 
+                input(type="range",step="0.1",value=0.5,min="0", max="1")#volume.videoControls__volume
+            div.videoControls__timeline
+                span#currenTime 00:00:00
+                span  / 
+                span#totalTime 00:00:00
+                input(type="range",step="1",value=0,min="0")#timeline
+            div
+                button#fullScreen
+                    i.fas.fa-expand
+    div.video__data
+            p.video__title=video.title
+            small.video__owner Uploaded by 
+                a(href=`/users/${video.owner._id}`)=video.owner.name
+            small.video__createdAt=video.createAt.toLocaleDateString('ko-KR', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+            if String(video.owner._id) === String(loggedInUser._id)
+                a(href=`${video.id}/edit`) Edit Video &rarr;
+                br
+                a(href=`${video.id}/delete`) Delete Video &rarr;  
+    if loggedIn    
+        div.video__add-comments 
+            form.video__comment-form#commentForm
+                textarea(cols="30", rows="10", placeholder="Write a nice comment...")
+                button Add comment
+    div.video__comments
+        ul
+            each comment in video.comment.reverse()
+                li(data-id=comment._id).video__comment
+                    div
+                        i.fas.fa-comment 
+                        p(style="white-space: pre-line") #{comment.text} 
+                    if String(loggedInUser._id) === String(comment.owner)                  
+                        button.deleteBtn ❌
+
+
+
+block scripts 
+    script(src="/assets/js/videoPlayer.js")        
+    script(src="/assets/js/commentSection.js")        
